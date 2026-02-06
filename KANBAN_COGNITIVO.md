@@ -45,6 +45,30 @@ El objetivo no es "organizar tareas" sino **reducir carga mental y ayudar a deci
 - **Foco de la semana** siempre visible como header fijo.
 - **Bloqueados** fuera del flujo principal para liberar la cabeza.
 
+### 2.3 Vista Única con Filtros (no vistas separadas)
+
+**Un solo board. Tres áreas de vida. Filtros rápidos.**
+
+No hay 3 tableros separados (personal / uni / trabajo). Todo vive en un solo lugar porque:
+
+1. **Necesitas la foto completa** para detectar sobrecarga. Si uni + trabajo + personal suman 12 tareas activas, eso solo se ve junto.
+2. **El color ya separa visualmente** cada área — no necesitas pestañas.
+3. **Menos lugares que revisar** = menos carga mental.
+
+#### Barra de filtros (arriba del board)
+
+```
+[Todos] [🟧 Personal] [🟦 Uni] [🟩 Trabajo] [🟪 Crecimiento]
+```
+
+| Modo | Cuándo usarlo |
+|---|---|
+| **Todos** (default) | Planificación semanal, ritual del domingo, detectar desbalance entre áreas |
+| **Filtro por dominio** | Cuando estás en "modo uni" y solo quieres ver esas tareas |
+
+> Un clic para filtrar. Un clic para volver a ver todo.  
+> Sin navegación, sin pestañas, sin perder contexto.
+
 ### 2.2 Columnas del Board
 
 | Columna | Propósito | Reglas |
@@ -76,7 +100,7 @@ interface Task {
   order: number;          // posición dentro de la columna
 }
 
-type Domain = "uni" | "freelance" | "startup" | "learning";
+type Domain = "personal" | "uni" | "work" | "growth";
 type TaskState = "todo" | "doing" | "done" | "blocked";
 type EnergyLevel = "high" | "low";
 ```
@@ -116,18 +140,25 @@ interface WeeklySnapshot {
 
 ## 4. Sistema Visual
 
-### 4.1 Color = Dominio (nunca prioridad)
+### 4.1 Color = Área de Vida (nunca prioridad)
 
-| Color | Dominio | Uso visual |
-|---|---|---|
-| 🟧 Naranja `#F97316` | Universidad (6to ciclo) | Borde izquierdo del card |
-| 🟦 Azul `#3B82F6` | Freelance / Clientes (SEACE) | Borde izquierdo del card |
-| 🟩 Verde `#22C55E` | Startup / Prácticas | Borde izquierdo del card |
-| 🟪 Morado `#A855F7` | Aprendizaje (CV, RAG, papers) | Borde izquierdo del card |
+Los dominios reflejan las **3 dimensiones reales** de tu vida, no categorías arbitrarias:
 
-> Si la semana tiene mucho azul → riesgo de burnout por clientes.  
-> Si hay mucho morado → estás aprendiendo pero no entregando.  
+| Color | Dominio | Ejemplos | Uso visual |
+|---|---|---|---|
+| 🟧 Naranja `#F97316` | **Personal** | Salud, hogar, social, trámites, familia | Borde izquierdo del card |
+| 🟦 Azul `#3B82F6` | **Universidad** | 6to ciclo, exámenes, entregables, grupos | Borde izquierdo del card |
+| 🟩 Verde `#22C55E` | **Trabajo** | Freelance (SEACE), startup, prácticas | Borde izquierdo del card |
+| 🟪 Morado `#A855F7` | **Crecimiento** *(opcional)* | Aprendizaje libre, CV, RAG, papers | Borde izquierdo del card |
+
+> Si la semana tiene mucho verde y cero naranja → estás descuidando tu vida personal.  
+> Si hay mucho azul → semana de entregas, protege tu energía.  
+> Si naranja domina → quizá estás procrastinando lo importante.  
 > **El color te habla sin que leas nada.**
+
+#### ¿Por qué "Crecimiento" es opcional?
+
+A veces estudiar algo nuevo es parte de tu trabajo (verde) o de la universidad (azul). Usa morado solo cuando aprendes algo **por cuenta propia**, sin deadline externo. Si no te aporta claridad, quédate con 3 dominios.
 
 ### 4.2 Iconos = Micro-señales (esquina superior derecha del card)
 
@@ -277,7 +308,7 @@ Esa va como Foco Semanal, arriba y centrada.
 
 | Métrica | Para qué sirve |
 |---|---|
-| % tiempo por dominio | Detectar desbalance (mucho freelance = burnout) |
+| % tiempo por dominio | Detectar desbalance entre vida personal, uni y trabajo |
 | Promedio de tasks simultáneas en DOING | ¿Estás haciendo multitasking? |
 | Días promedio bloqueado | ¿Hay cuellos de botella externos? |
 | Tasks completadas por semana | Tendencia, no competencia |
@@ -358,6 +389,7 @@ Pensado para el perfil del autor (CS, exp. con React/TS):
 - **No es un backlog infinito** → si TO DO crece sin control, el sistema te avisa.
 - **No es un tracker de hábitos** → no hay rachas ni puntos.
 - **No es un calendario** → no compite con Google Calendar.
+- **No son 3 apps separadas** → tu vida personal, académica y laboral conviven en un solo tablero porque así funciona tu cabeza.
 - **Es un filtro cognitivo** → reduce opciones, sugiere acción, refuerza progreso.
 
 ---
