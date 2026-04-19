@@ -20,6 +20,7 @@ import { TaskCard } from "./task-card";
 import { AddTaskForm } from "./add-task-form";
 import { DomainFilter } from "./domain-filter";
 import { TaskEditModal } from "./task-edit-modal";
+import { getCurrentWeek } from "@/lib/week";
 
 export function Board() {
   const hydrated = useHydrated();
@@ -36,6 +37,9 @@ export function Board() {
   const completedToday = tasks.filter(
     (t) => t.completedAt && t.completedAt.startsWith(today)
   ).length;
+
+  // Current personal week number
+  const currentWeek = getCurrentWeek();
 
   // Keyboard shortcut: N → open add form
   useEffect(() => {
@@ -115,13 +119,34 @@ export function Board() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex flex-col gap-0.5">
-              <h1
-                className="text-2xl font-bold"
-                style={{ color: "var(--text)", letterSpacing: "-0.03em" }}
-              >
-                rafban
-              </h1>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-baseline gap-3">
+                <h1
+                  className="text-3xl font-bold"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, var(--text) 0%, var(--text-2) 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    letterSpacing: "-0.045em",
+                    lineHeight: 1,
+                  }}
+                >
+                  rafban
+                </h1>
+                <span
+                  className="font-mono text-[11px] font-semibold uppercase px-2 py-0.5 rounded-md"
+                  style={{
+                    background: "var(--surface-3)",
+                    color: "var(--text-2)",
+                    outline: "1px solid var(--border)",
+                    letterSpacing: "0.08em",
+                  }}
+                  title="Semana personal (anchor: 2026-03-16)"
+                >
+                  semana {currentWeek}
+                </span>
+              </div>
               <p style={{ color: "var(--text-muted)", fontSize: 11 }}>
                 copiloto cognitivo · presiona{" "}
                 <kbd
