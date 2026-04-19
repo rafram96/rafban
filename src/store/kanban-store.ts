@@ -10,6 +10,7 @@ interface KanbanStore {
   // UI state (not persisted)
   editingTaskId: string | null;
   addFormOpen: boolean;
+  lastDeleted: Task | null;
 
   // Actions
   addTask: (
@@ -31,6 +32,8 @@ interface KanbanStore {
   setFilter: (filter: Domain | "all") => void;
   setEditingTaskId: (id: string | null) => void;
   setAddFormOpen: (open: boolean) => void;
+  restoreLastDeleted: () => void;
+  dismissUndo: () => void;
 }
 
 export function selectFilteredTasksByState(
@@ -58,6 +61,7 @@ export const useKanbanStore = create<KanbanStore>()(
       filter: "all",
       editingTaskId: null,
       addFormOpen: false,
+      lastDeleted: null,
 
       addTask: (title, domain, opts = {}) => {
         const now = new Date().toISOString();
@@ -110,8 +114,29 @@ export const useKanbanStore = create<KanbanStore>()(
       },
 
       deleteTask: (taskId) => {
-        set((s) => ({ tasks: s.tasks.filter((t) => t.id !== taskId) }));
+        const task = get().tasks.find((t) => t.id === taskId);
+        if (!task) return;
+        set((s) => ({
+          tasks: s.tasks.filter((t) => t.id !== taskId),
+          lastDeleted: task,
+        }));
       },
+
+      restoreLastDeleted: () => {
+        const last = get().lastDeleted;
+        if (!last) return;
+        // If a task with the same id still exists (race), skip
+        if (get().tasks.some((t) => t.id === last.id)) {
+          set({ lastDeleted: null });
+          return;
+        }
+        set((s) => ({
+          tasks: [...s.tasks, last],
+          lastDeleted: null,
+        }));
+      },
+
+      dismissUndo: () => set({ lastDeleted: null }),
 
       reorderTask: (taskId, newOrder) => {
         set((s) => ({

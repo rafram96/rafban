@@ -20,6 +20,7 @@ import { TaskCard } from "./task-card";
 import { AddTaskForm } from "./add-task-form";
 import { DomainFilter } from "./domain-filter";
 import { TaskEditModal } from "./task-edit-modal";
+import { UndoToast } from "./undo-toast";
 import { getCurrentWeek } from "@/lib/week";
 
 export function Board() {
@@ -214,6 +215,7 @@ export function Board() {
       )}
 
       <TaskEditModal />
+      <UndoToast />
     </>
   );
 }
